@@ -7,7 +7,7 @@ import random
 import wolframalpha
 import webbrowser
 import speech_recognition as sr
-
+import json
 # using the driver made by microsoft
 engine = pyttsx3.init("sapi5")
 voices = engine.getProperty('voices')
@@ -180,6 +180,15 @@ def speakingFreida():
             userTask = userTask.replace("search", "")
             webbrowser.open_new_tab(userTask)
             time.sleep(10)
+
+        elif 'capital' in userTask:
+            speak('I can tell the capitals of the countries in the whole world. What country?')
+            country_name = takeATask()
+            with open('capitals.json') as capitals:
+                data_capitals = json.load(capitals)
+                response = data_capitals[country_name]
+            speak(f"The capital of {country_name} is {response}")
+            time.sleep(3)
 
         elif 'math' in userTask:
             speak('I can solve basic math problems')
